@@ -8,8 +8,7 @@ ARG BUILDPLATFORM
 
 RUN echo "I am running build on $BUILDPLATFORM, building for $TARGETPLATFORM"
 
-RUN apt-get update && apt-get install -y locales && rm -rf /var/lib/apt/lists/* &&
-        localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
+RUN apt-get update && apt-get install -y locales && rm -rf /var/lib/apt/lists/* && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
 
 ENV LANG=en_US.utf8
 ENV NODE_VERSION=v16.18.0
@@ -25,9 +24,7 @@ RUN chmod +x /usr/local/sbin/node-installer.sh && node-installer.sh
 ENV PATH=/usr/local/lib/nodejs/bin:$PATH
 
 # Run as a non-root user
-RUN useradd --create-home csi &&
-        mkdir /home/csi/app &&
-        chown -R csi: /home/csi
+RUN useradd --create-home csi && mkdir /home/csi/app && chown -R csi: /home/csi
 WORKDIR /home/csi/app
 USER csi
 
@@ -52,17 +49,14 @@ ARG BUILDPLATFORM
 
 RUN echo "I am running on final $BUILDPLATFORM, building for $TARGETPLATFORM"
 
-RUN apt-get update && apt-get install -y locales && rm -rf /var/lib/apt/lists/* &&
-        localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
+RUN apt-get update && apt-get install -y locales && rm -rf /var/lib/apt/lists/* && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
 
 ENV LANG=en_US.utf8
 ENV NODE_ENV=production
 
 # Workaround for https://github.com/nodejs/node/issues/37219
 RUN test $(uname -m) != armv7l || (
-        apt-get update &&
-                apt-get install -y libatomic1 &&
-                rm -rf /var/lib/apt/lists/*
+        apt-get update && apt-get install -y libatomic1 && rm -rf /var/lib/apt/lists/*
 )
 
 # install node
@@ -73,9 +67,7 @@ COPY --from=build /usr/local/lib/nodejs/bin/node /usr/local/bin/node
 # node service requirements
 # netbase is required by rpcbind/rpcinfo to work properly
 # /etc/{services,rpc} are required
-RUN apt-get update &&
-        apt-get install -y netbase socat e2fsprogs exfatprogs xfsprogs btrfs-progs fatresize dosfstools ntfs-3g nfs-common cifs-utils fdisk gdisk cloud-guest-utils sudo rsync procps util-linux nvme-cli &&
-        rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y netbase socat e2fsprogs exfatprogs xfsprogs btrfs-progs fatresize dosfstools ntfs-3g nfs-common cifs-utils fdisk gdisk cloud-guest-utils sudo rsync procps util-linux nvme-cli && rm -rf /var/lib/apt/lists/*
 
 # controller requirements
 #RUN apt-get update && \
@@ -97,8 +89,7 @@ ADD docker/zpool /usr/local/bin/zpool
 RUN chmod +x /usr/local/bin/zpool
 
 # Run as a non-root user
-RUN useradd --create-home csi &&
-        chown -R csi: /home/csi
+RUN useradd --create-home csi && chown -R csi: /home/csi
 
 COPY --from=build --chown=csi:csi /home/csi/app /home/csi/app
 
