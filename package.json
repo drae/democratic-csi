@@ -9,13 +9,13 @@
   },
   "author": "Travis Glenn Hansen <travisghansen@yahoo.com>",
   "bugs": {
-    "url": "https://github.com/democratic-csi/democratic-csi/issues"
+    "url": "https://github.com/drae/democratic-csi/issues"
   },
-  "homepage": "https://github.com/democratic-csi/democratic-csi#readme",
+  "homepage": "https://github.com/drae/democratic-csi#readme",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/democratic-csi/democratic-csi.git"
+    "url": "https://github.com/drae/democratic-csi.git"
   },
   "dependencies": {
     "@grpc/grpc-js": "^1.8.4",
