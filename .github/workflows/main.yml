@@ -50,10 +50,7 @@ jobs:
         config:
           - zfs-local/zvol.yaml
           - zfs-local/dataset.yaml
-    runs-on:
-      - Linux
-      - X64
-#      - csi-sanity-zfs-local
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v3
       - uses: actions/download-artifact@v3
@@ -81,11 +78,7 @@ jobs:
             run: |
               # run tests
               ci/bin/run.sh
-    runs-on:
-#      - self-hosted
-      - ${{ matrix.os }}
-      - X64
-#      - csi-sanity-local-hostpath
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v3
       - uses: actions/download-artifact@v3
